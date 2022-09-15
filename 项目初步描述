@@ -1,0 +1,12 @@
+project name: opencv
+link: https://github.com/opencv/opencv
+
+features:
+1. Open Source
+OpenCV is open source and released under the BSD 3-Clause License. It is free for commercial use.
+
+2. Optimized
+OpenCV is a highly optimized library with focus on real-time applications.
+
+3. Cross-Platform
+C++, Python and Java interfaces support Linux, MacOS, Windows, iOS, and Android.
