@@ -42,14 +42,22 @@ In the initial stages of OpenCV, the goals of the company were as follows:
 
 ### <u>Key Driver</u>
 
- The key design idea is to keep pipeline code itself platform-neutral while specifying which kernels to use and which devices to utilize using extra parameters at graph compile (configuration) time.
+1. Cross-platform
+
+The key design idea is to keep pipeline code itself platform-neutral while specifying which kernels to use and which devices to utilize using extra parameters at graph compile (configuration) time.
+
+2. Scalability
+
+The system based on machine vision has realized the advantages of intelligence, full automation and high precision of products. However, with the wider use of machine vision, the machine vision detection technology also needs to be constantly developed, so that when accessing different systems, it can improve efficiency and ensure reliability.
 
 ### <u>Early Decision</u>
 
  In the early days of OpenCV, the goals of the project were described as:
 
-1. Advance vision research by providing not only open but also optimized code for basic vision infrastructure. No more reinventing the wheel.
-
+1. Advance vision research by providing not only open but also optimized code for basic vision infrastructure. No more reinventing the wheel. 
 2. Disseminate vision knowledge by providing a common infrastructure that developers could build on, so that code would be more readily readable and transferable.
-
 3. Advance vision-based commercial applications by making portable, performance-optimized code available for free – with a license that did not require code to be open or free itself.
+4. OpenCV handles all the memory automatically.
+
+On the basis of the second decision, the third decision requires the common infrastructure portable and performance-optimized.
+
