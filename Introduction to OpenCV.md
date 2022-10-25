@@ -61,25 +61,59 @@ In the initial stages of OpenCV, the goals of the company were as follows:
 
 3. Scalability. OpenCV now supports many algorithms related to computer vision and machine learning, and it is expanding every day.
 
-## <u>Key Driver</u>
+## <u>Key Driver</u> 
 
 1. Cross-platform
 
 The key design idea is to keep pipeline code itself platform-neutral while specifying which kernels to use and which devices to utilize using extra parameters at graph compile (configuration) time.
 
-2. Scalability
+2. Extensibility
 
 The system based on machine vision has realized the advantages of intelligence, full automation and high precision of products. However, with the wider use of machine vision, the machine vision detection technology also needs to be constantly developed, so that when accessing different systems, it can improve efficiency and ensure reliability.
 
+3. Usability
+
+Users can use algorithm in openCV quickly and efficiently through calling function and giving parameters.
+
 ## <u>Early Decision</u> 
 
-2. To make openCV easier to use and platform-neutral, openCV should provide user a API-layer which he can intercacts with directly and hide the entities the user operates on.
-3. OpenCV should provide an intermediate layer which unrolls user computation into a graph and then applies a number of transformations to it. 
-4. To make openCV extensible, openCV should provide a "reference backend", which other backends can extend. Many backends layers which are highly coupled with low-level platform details, with every backend standing for every platform.
-5. To make openCV easier to use, openCV handles all the memory automatically.
+1. To make openCV Cross-platform,  openCV was written in C and this makes OpenCV portable to almost any commercial system.
+2. To make openCV Cross-platform, openCV use a wrapper on top of dynamically loaded OpenCL runtime, so-called Transparent API (T-API).
+3. OpenCV has many component: core, imgproc, object detection, features2d, calib3dstereo, and other modules. 
+4. To make openCV easier to use, openCV design class MAT to achieve reference counting mechanism to automate memory management.
 
 ## <u>Technical Context</u>  
 
 1. Usibility. The lack of a computer vision library makes the development process require additional development.
 2. Scalability. More and more computer vision algorithms have been proposed, which demands the scalability of the software. In commercial software, due to limitation of the interface, and it is difficult to expand flexibly according to the requirements.
+
+## <u>Key Driver Senario</u>
+
+1. Extensibility
+
+   source: developer
+
+   stimulus: add new function
+
+   environment: coding time
+
+   artifact: modules, functions
+
+   response: it is not neccessary to change the exsisting structure and code
+
+   response measure: the cost of adding a new function should be low.
+
+2. usibility
+
+   source: user
+
+   stimulus: call a function to operate on an image
+
+   artifact: system
+
+   environment: running time
+
+   response: return the image result 
+
+   response measure: the number of errors should be less than 1. User satisfaction: the proccessed image is highly close to the expectaion.
 
