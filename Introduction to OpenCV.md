@@ -56,10 +56,9 @@ In the initial stages of OpenCV, the goals of the company were as follows:
 ## <u>Quality attribute</u>
 
 1. Usablity. OpenCV supports a wide range of programming languages which include C++, Java, Python, etc. This is a cross-platform library that supports Windows, Linux, macOS, Android, and iOS.
-
-2. Performance. It plays a major role in real-time image processing and computer vision tasks which is a necessity for modern applications. OpenCV makes use of NumPy, which is a highly optimized python library for numerical computations. All of the OpenCV array structures are converted to and from NumPy arrays.
-
+2. Performance. OpenCV is a highly optimized library with focus on real-time applications.
 3. Scalability. OpenCV now supports many algorithms related to computer vision and machine learning, and it is expanding every day.
+4. Cross-platform. OpenCV has C++, Python and Java interfaces support Linux, MacOS, Windows, iOS, and Android.
 
 ## <u>Key Driver</u> 
 
@@ -67,9 +66,9 @@ In the initial stages of OpenCV, the goals of the company were as follows:
 
 The key design idea is to keep pipeline code itself platform-neutral while specifying which kernels to use and which devices to utilize using extra parameters at graph compile (configuration) time.
 
-2. Extensibility
+2. Performance
 
-The system based on machine vision has realized the advantages of intelligence, full automation and high precision of products. However, with the wider use of machine vision, the machine vision detection technology also needs to be constantly developed, so that when accessing different systems, it can improve efficiency and ensure reliability.
+ It plays a major role in real-time image processing and computer vision tasks which is a necessity for modern applications. OpenCV makes use of NumPy, which is a highly optimized python library for numerical computations. All of the OpenCV array structures are converted to and from NumPy arrays.
 
 3. Usability
 
@@ -89,25 +88,25 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
 ## <u>Key Driver Senario</u>
 
-1. Extensibility
+1. Performance
 
-   source: developer
+   source: user
 
-   stimulus: add new function
+   stimulus: smooth a picture
 
-   environment: coding time
+   environment: normal operation
 
-   artifact: modules, functions
+   artifact: whole system
 
-   response: it is not neccessary to change the exsisting structure and code
+   response: the system return the correct result
 
-   response measure: the cost of adding a new function should be low.
+   response measure: the time spent to smooth the picture should be less than 1s.//更加具体
 
 2. usibility
 
    source: user
 
-   stimulus: call a function to operate on an image
+   stimulus:  sharpen an image
 
    artifact: system
 
@@ -115,5 +114,15 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
    response: return the image result 
 
-   response measure: the number of errors should be less than 1. User satisfaction: the proccessed image is highly close to the expectaion.
+   response measure:  the proccessed image is highly close to the expectaion.
+
+## <u>**Architecture Tactics**</u>
+
+1. Performance: Use concurrent
+
+OpenCV has designed a uniform set of vector instructions(universal intrinsics), which can mask the differences between the different instruction sets. It allows you to write a piece of code for vector acceleration on different platforms and instruction sets. 
+
+2. Performance: Reduce Overhead 
+
+OpenCV designed class GMat. Instead of storing the actual data, it records what the user does on the GMat and eventually combines multiple GMat to generate a computational graph to handle the real calculation. GMat can provide cross-function optimization that cannot be provided by decentralized functions internally, such as the merger of arithmetic operations, multiplexing of cache and avoid multiple allocation of buffers.
 
