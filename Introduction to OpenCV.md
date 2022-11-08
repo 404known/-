@@ -96,11 +96,13 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
    environment: normal operation
 
-   artifact: whole system
+   artifact: imgproc module (image processing module)
 
-   response: the system return the correct result
+   response: return the correct result in time
 
-   response measure: the time spent to smooth the picture should be less than 1s.//更加具体
+   response measure: the time spent to smooth the picture should be less than 1s.
+
+   ![](performance senario.png)
 
 2. usibility
 
@@ -108,13 +110,15 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
    stimulus:  sharpen an image
 
-   artifact: system
+   artifact: imgproc module (image processing module)
 
    environment: running time
 
    response: return the image result 
 
    response measure:  the proccessed image is highly close to the expectaion.
+   
+   ![](usibility senario.png)
 
 ## <u>**Architecture Tactics**</u>
 
@@ -122,7 +126,12 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
 OpenCV has designed a uniform set of vector instructions(universal intrinsics), which can mask the differences between the different instruction sets. It allows you to write a piece of code for vector acceleration on different platforms and instruction sets. 
 
+OpenCV Universal Intrinsic encapsulates the vectors (vector) of the different SIMD instructions into a unified data structure, overloading the various operators, and describes the vector width as a variable that automatically changes with the compiled environment. 
+
+![](ConcurrentTactic.png)
+
 2. Performance: Reduce Overhead 
 
 OpenCV designed class GMat. Instead of storing the actual data, it records what the user does on the GMat and eventually combines multiple GMat to generate a computational graph to handle the real calculation. GMat can provide cross-function optimization that cannot be provided by decentralized functions internally, such as the merger of arithmetic operations, multiplexing of cache and avoid multiple allocation of buffers.
 
+![](high-level design.png)
