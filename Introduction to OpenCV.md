@@ -102,7 +102,7 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
    response measure: the time spent to smooth the picture should be less than 1s.
 
-   ![](performance senario.png)
+   ![](PerformanceSenario.png)
 
 2. usibility
 
@@ -118,7 +118,7 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
    response measure:  the proccessed image is highly close to the expectaion.
    
-   ![](usibility senario.png)
+   ![](UsibilitySenario.png)
 
 ## <u>**Architecture Tactics**</u>
 
@@ -134,4 +134,4 @@ OpenCV Universal Intrinsic encapsulates the vectors (vector) of the different SI
 
 OpenCV designed class GMat. Instead of storing the actual data, it records what the user does on the GMat and eventually combines multiple GMat to generate a computational graph to handle the real calculation. GMat can provide cross-function optimization that cannot be provided by decentralized functions internally, such as the merger of arithmetic operations, multiplexing of cache and avoid multiple allocation of buffers.
 
-![](high-level design.png)
+![](high-leveldesign.png)
