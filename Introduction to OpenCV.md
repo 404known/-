@@ -1,6 +1,6 @@
 ## <u>What is OpenCV?</u>
 
-OpenCV stands for Open-Source Computer Vision (Library). It is the most common and popularly used, well-documented Computer Vision library. OpenCV is an open-source library that incorporates numerous computer vision algorithms. OpenCV increases computational efficiency and assists with real-time applications. One of the major goals of OpenCV is to provide an accessible and easy-to-use computer vision infrastructure that helps people build sophisticated computer vision applications quickly.
+​	OpenCV stands for Open-Source Computer Vision (Library). It is the most common and popularly used, well-documented Computer Vision library. OpenCV is an open-source library that incorporates numerous computer vision algorithms. OpenCV increases computational efficiency and assists with real-time applications. One of the major goals of OpenCV is to provide an accessible and easy-to-use computer vision infrastructure that helps people build sophisticated computer vision applications quickly.
 
 ## <u>Features of OpenCV</u>
 
@@ -18,7 +18,7 @@ Main features of OpenCV-Python include:
 
 ### User
 
-The people who use openCV to develop machine vision application or study machine vision.
+​	The people who use openCV to develop machine vision application or study machine vision.
 
 #### Main Concerns
 
@@ -28,7 +28,7 @@ The people who use openCV to develop machine vision application or study machine
 
 ### Project Manager
 
-Responsible for planning, sequencing, scheduling, and allocating resources to develop software components and deliver components to integration and test activities.
+​	Responsible for planning, sequencing, scheduling, and allocating resources to develop software components and deliver components to integration and test activities.
 
 #### Main Concerns
 
@@ -37,7 +37,7 @@ Responsible for planning, sequencing, scheduling, and allocating resources to de
 
 ### Tester
 
-Creating tests based on the behavior and interaction of the software elements. 
+​	Creating tests based on the behavior and interaction of the software elements. 
 
 #### Main Concerns
 
@@ -45,9 +45,9 @@ Creating tests based on the behavior and interaction of the software elements.
 
 ## <u>Context</u>
 
-OpenCV was initiated at Intel in the year 1999 by Gary Bradsky. The first release of OpenCV came later in the year 2000. It was originally developed by Intel employees in a research center in Russia, but the project was taken over by a non-profit organization in 2012. OpenCV supports a multitude of Computer Vision and Machine Learning algorithms that are ever-growing.
+​	OpenCV was initiated at Intel in the year 1999 by Gary Bradsky. The first release of OpenCV came later in the year 2000. It was originally developed by Intel employees in a research center in Russia, but the project was taken over by a non-profit organization in 2012. OpenCV supports a multitude of Computer Vision and Machine Learning algorithms that are ever-growing.
 
-In the initial stages of OpenCV, the goals of the company were as follows:
+​	In the initial stages of OpenCV, the goals of the company were as follows:
 
 1. They sought to make advanced computer vision more accessible by providing open and optimized code for computer vision implementation.
 2. The company aimed to essential open-source computer vision knowledge by providing a common platform that developers could build on, to make the code readily readable and transferable.
@@ -64,15 +64,15 @@ In the initial stages of OpenCV, the goals of the company were as follows:
 
 1. Cross-platform
 
-The key design idea is to keep pipeline code itself platform-neutral while specifying which kernels to use and which devices to utilize using extra parameters at graph compile (configuration) time.
+   ​	The key design idea is to keep pipeline code itself platform-neutral while specifying which kernels to use and which devices to utilize using extra parameters at graph compile (configuration) time.
 
 2. Performance
 
- It plays a major role in real-time image processing and computer vision tasks which is a necessity for modern applications. OpenCV makes use of NumPy, which is a highly optimized python library for numerical computations. All of the OpenCV array structures are converted to and from NumPy arrays.
+   ​	 It plays a major role in real-time image processing and computer vision tasks which is a necessity for modern applications. OpenCV makes use of NumPy, which is a highly optimized python library for numerical computations. All of the OpenCV array structures are converted to and from NumPy arrays.
 
 3. Usability
 
-Users can use algorithm in openCV quickly and efficiently through calling function and giving parameters.
+   ​	Users can use algorithm in openCV quickly and efficiently through calling function and giving parameters.
 
 ## <u>Early Decision</u> 
 
@@ -90,48 +90,58 @@ Users can use algorithm in openCV quickly and efficiently through calling functi
 
 1. Performance
 
-   source: user
-
+   ```
+source: user
    stimulus: smooth a picture
-
-   environment: normal operation
-
+environment: normal operation
    artifact: imgproc module (image processing module)
-
-   response: return the correct result in time
-
+response: return the correct result in time
    response measure: the time spent to smooth the picture should be less than 1s.
-
-   ![](PerformanceSenario.png)
-
+```
+   
+![](PerformanceSenario.png)
+   
 2. usibility
 
-   source: user
-
+   ```
+source: user
    stimulus:  sharpen an image
-
-   artifact: imgproc module (image processing module)
-
+artifact: imgproc module (image processing module)
    environment: running time
-
-   response: return the image result 
-
-   response measure:  the proccessed image is highly close to the expectaion.
+response: return the image result 
+   response measure: it takes less than 15 minutes for the user to learn to call the function correctly.
+```
    
-   ![](UsibilitySenario.png)
+![](UsibilitySenario.png)
 
 ## <u>**Architecture Tactics**</u>
 
-1. Performance: Use concurrent
+1. Performance and Interoperability : Use concurrent and tailor interface
 
-OpenCV has designed a uniform set of vector instructions(universal intrinsics), which can mask the differences between the different instruction sets. It allows you to write a piece of code for vector acceleration on different platforms and instruction sets. 
+   ​	OpenCV has designed a uniform set of vector instructions(universal intrinsics), which can mask the differences between the different instruction sets. It allows you to write a piece of code for vector acceleration on different platforms and instruction sets. 
 
-OpenCV Universal Intrinsic encapsulates the vectors (vector) of the different SIMD instructions into a unified data structure, overloading the various operators, and describes the vector width as a variable that automatically changes with the compiled environment. 
+   ​	OpenCV Universal Intrinsic encapsulates the vectors (vector) of the different SIMD instructions into a unified data structure, overloading the various operators, and describes the vector width as a variable that automatically changes with the compiled environment. 
 
 ![](ConcurrentTactic.png)
 
+​	SIMD, aka single instruction multiple data, means that a once-run operational instruction can perform more than one data stream. For example, an addition instruction cycle can only calculate a set of numbers (one-dimensional vector addition). Using SIMD, an addition instruction cycle can calculate multiple data concurrently (n-dimensional vector addition), which greatly improves the operation efficiency.
+
+![](SIMD.png)
+
 2. Performance: Reduce Overhead 
 
-OpenCV designed class GMat. Instead of storing the actual data, it records what the user does on the GMat and eventually combines multiple GMat to generate a computational graph to handle the real calculation. GMat can provide cross-function optimization that cannot be provided by decentralized functions internally, such as the merger of arithmetic operations, multiplexing of cache and avoid multiple allocation of buffers.
+   ​	OpenCV designed class GMat. Instead of storing the actual data, it records what the user does on the GMat and eventually combines multiple GMat to generate a computational graph to handle the real calculation. GMat can provide cross-function optimization that cannot be provided by decentralized functions internally, such as the merger of arithmetic operations, multiplexing of cache and avoid multiple allocation of buffers.
+
+![](ReduceOverheadTactic.png)
+
+## **<u>Architecture Patterns</u>**
+
+Layer Pattern
+
+​	There are three layers in GAPI:
+
+- **API Layer** – this is the top layer, which implements G-API public interface, its building blocks and semantics. When user constructs a pipeline with G-API, he interacts with this layer directly, and the entities the user operates on are provided by this layer.
+- **Graph Compiler Layer** – this is the intermediate layer which unrolls user computation into a graph and then applies a number of transformations to it. This layer is built atop of ADE Framework.
+- **Backends Layer** – this is the lowest level layer, which lists a number of Backends. In contrast with the above two layers, backends are highly coupled with low-level platform details, with every backend standing for every platform. A backend operates on a processed graph (coming from the graph compiler) and executes this graph optimally for a specific platform or device.
 
 ![](high-leveldesign.png)
