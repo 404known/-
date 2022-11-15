@@ -97,21 +97,23 @@ environment: normal operation
    artifact: imgproc module (image processing module)
 response: return the correct result in time
    response measure: the time spent to smooth the picture should be less than 1s.
-```
-   
+   ```
+
+
 ![](PerformanceSenario.png)
-   
+
 2. usibility
 
-   ```
-source: user
-   stimulus:  sharpen an image
-artifact: imgproc module (image processing module)
-   environment: running time
-response: return the image result 
-   response measure: it takes less than 15 minutes for the user to learn to call the function correctly.
 ```
-   
+source: user
+stimulus:  sharpen an image
+artifact: imgproc module (image processing module)
+environment: running time
+response: return the image result 
+response measure: it takes less than 15 minutes for the user to learn to call the function correctly.
+```
+
+
 ![](UsibilitySenario.png)
 
 ## <u>**Architecture Tactics**</u>
