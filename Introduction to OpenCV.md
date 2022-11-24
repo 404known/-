@@ -14,7 +14,7 @@ Main features of OpenCV-Python include:
 6. **Fast prototyping:** Implemented in the development of real-time applications.
 7. **Extensive use**: Used across various organizations and companies.
 
-## <u>StakeHolder And the Specific Concerns</u>
+## <u>Stakeholder And the Specific Concerns</u>
 
 ### User
 
@@ -55,7 +55,7 @@ Main features of OpenCV-Python include:
 
 ## <u>Quality attribute</u>
 
-1. Usablity. OpenCV supports a wide range of programming languages which include C++, Java, Python, etc. This is a cross-platform library that supports Windows, Linux, macOS, Android, and iOS.
+1. Usability . OpenCV supports a wide range of programming languages which include C++, Java, Python, etc. This is a cross-platform library that supports Windows, Linux, macOS, Android, and iOS.
 2. Performance. OpenCV is a highly optimized library with focus on real-time applications.
 3. Scalability. OpenCV now supports many algorithms related to computer vision and machine learning, and it is expanding every day.
 4. Cross-platform. OpenCV has C++, Python and Java interfaces support Linux, MacOS, Windows, iOS, and Android.
@@ -77,40 +77,39 @@ Main features of OpenCV-Python include:
 ## <u>Early Decision</u> 
 
 1. To make openCV Cross-platform,  openCV was written in C and this makes OpenCV portable to almost any commercial system.
-2. To make openCV Cross-platform, openCV use a wrapper on top of dynamically loaded OpenCL runtime, so-called Transparent API (T-API).
 3. OpenCV has many component: core, imgproc, object detection, features2d, calib3dstereo, and other modules. 
 4. To make openCV easier to use, openCV design class MAT to achieve reference counting mechanism to automate memory management.
 
 ## <u>Technical Context</u>  
 
-1. Usibility. The lack of a computer vision library makes the development process require additional development.
+1. Usability. The lack of a computer vision library makes the development process require additional development.
 2. Scalability. More and more computer vision algorithms have been proposed, which demands the scalability of the software. In commercial software, due to limitation of the interface, and it is difficult to expand flexibly according to the requirements.
 
-## <u>Key Driver Senario</u>
+## <u>Key Driver Scenario</u>
 
 1. Performance
 
    source: user
-stimulus: smooth a picture
+stimulus: smooth a picture 
    environment: normal operation
-artifact: imgproc module (image processing module)
+artifact: imgproc module (image processing module), universal intrinsics
    response: return the correct result in time
 response measure: the time spent to smooth the picture should be less than 1s.
 
 
-![](PerformanceSenario.png)
+![](imgs/PerformanceSenario.png)
 
-2. usibility
+2. usability 
 
    source: user
    stimulus:  sharpen an image
    artifact: imgproc module (image processing module)
-   environment: running time
+   environment: coding time
    response: return the image result 
    response measure: it takes less than 15 minutes for the user to learn to call the function correctly.
 
 
-![](UsibilitySenario.png)
+![](imgs/UsibilitySenario.png)
 
 ## <u>**Architecture Tactics**</u>
 
@@ -120,17 +119,17 @@ response measure: the time spent to smooth the picture should be less than 1s.
 
    ​	OpenCV Universal Intrinsic encapsulates the vectors (vector) of the different SIMD instructions into a unified data structure, overloading the various operators, and describes the vector width as a variable that automatically changes with the compiled environment. 
 
-![](ConcurrentTactic.png)
+![](imgs/ConcurrentTactic.png)
 
 ​	SIMD, aka single instruction multiple data, means that a once-run operational instruction can perform more than one data stream. For example, an addition instruction cycle can only calculate a set of numbers (one-dimensional vector addition). Using SIMD, an addition instruction cycle can calculate multiple data concurrently (n-dimensional vector addition), which greatly improves the operation efficiency.
 
-![](SIMD.png)
+![](imgs/SIMD.png)
 
 2. Performance: Reduce Overhead 
 
    ​	OpenCV designed class GMat. Instead of storing the actual data, it records what the user does on the GMat and eventually combines multiple GMat to generate a computational graph to handle the real calculation. GMat can provide cross-function optimization that cannot be provided by decentralized functions internally, such as the merger of arithmetic operations, multiplexing of cache and avoid multiple allocation of buffers.
 
-![](ReduceOverheadTactic.png)
+![](imgs/ReduceOverheadTactic.png)
 
 ## **<u>Architecture Patterns</u>**
 
@@ -138,8 +137,26 @@ Layer Pattern
 
 ​	There are three layers in GAPI:
 
-- **API Layer** – this is the top layer, which implements G-API public interface, its building blocks and semantics. When user constructs a pipeline with G-API, he interacts with this layer directly, and the entities the user operates on are provided by this layer.
+- **API Layer** – this is the top layer, which implements G-API public interface, its building blocks and semantics. When user constructs a pipeline with G-API, he interacts with this layer directly, and the entities the user operates on are provided by this layer. 
 - **Graph Compiler Layer** – this is the intermediate layer which unrolls user computation into a graph and then applies a number of transformations to it. This layer is built atop of ADE Framework.
 - **Backends Layer** – this is the lowest level layer, which lists a number of Backends. In contrast with the above two layers, backends are highly coupled with low-level platform details, with every backend standing for every platform. A backend operates on a processed graph (coming from the graph compiler) and executes this graph optimally for a specific platform or device.
 
-![](high-leveldesign.png)
+​    The classes used for interaction between layers are as follows:
+
+- **GComputation** class represents a captured computation graph. GComputation objects form boundaries for expression code user writes with G-API, allowing to compile and execute it.
+- **GCompiled** represents a compiled computation (graph). Objects of this class actually do data processing, and graph execution is incapsulated into objects of this class. At the same time, two different GCompiled objects produced from the single GComputation are completely independent and can be used concurrently. 
+
+![](imgs/high-leveldesign.png)
+
+​	The interaction procedure between the layers is as follows:
+
+​	The user calls the function of the GAPI , which produces the expressions. These expressions will be passed to the Graph Compiler layer.
+
+​	Initially, a bipartite graph is generated from expressions captured by API layer. This graph contains nodes of two types: *Data* and *Operations*. Graph always starts and ends with a Data node(s), with Operations nodes in-between. Every Operation node has inputs and outputs, both are Data nodes. This bipartite graph is saved by GComputation.
+
+​	After the initial graph is generated, it is actually processed by a number of graph transformations, called *passes*. ADE Framework acts as a compiler pass management engine, and passes are written specifically for G-API. There are different passes which check graph validity, refine details on operations and data, organize nodes into clusters ("Islands") based on affinity or user-specified regioning and more.
+
+​	Result of graph compilation is a compiled object, represented by class GCompiled. GCompiled will be executed in Backends layer later.
+
+​	The way graph executed is defined by backends selected for compilation. In fact, every backend builds its own execution script as the final stage of graph compilation process, when an executable  object is being generated.
+
