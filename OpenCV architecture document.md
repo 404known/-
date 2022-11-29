@@ -164,7 +164,7 @@ Layer Pattern
 
 ### Utility Tree
 
-![](imgs\utilityTree.png)
+![](imgs/utilityTree.png)
 
 ### Architecture Approach
 
@@ -237,7 +237,7 @@ Layer Pattern
 
 ​	G-API and universal intrinsics are two separate modules. The following figure shows the process accelerated with two modules.
 
-![](imgs\Mod.png)
+![](imgs/Mod.png)
 
 ## <u>Division of The Project</u>
 
